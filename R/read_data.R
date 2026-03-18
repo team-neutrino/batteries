@@ -9,6 +9,8 @@ meta <- read_excel(file2026, sheet = "Metadata") |>
 
 tests <- read_excel(file2026, sheet = "Battery Test Results") |>
   left_join(meta, by = join_by(Battery))
+
 comps <- read_excel(file2026, sheet = "Competition Log") |>
   left_join(meta, by = join_by(Battery)) |>
+  separate(key, into = c("event", "match"), sep = "_", remove = FALSE) |>
   mutate(voltage_drop = `Voltage @ 18 A Before` - `Voltage @ 18 A After`)
